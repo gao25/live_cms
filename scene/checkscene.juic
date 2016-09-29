@@ -33,7 +33,10 @@
       {@/if}
       <td class="cid">ID</td>
       <td class="chandle">操作</td>
-      <td class="cstate">状态</td>
+      <td class="cstate">现场状态</td>
+      {@if turn == 'on'}
+      <td class="sstate">直播状态</td>
+      {@/if}
       <td class="ctitle">标题</td>
       <td class="ccreater">创建人</td>
       <td class="cstyle">现场类型</td>
@@ -68,12 +71,17 @@
         </ul>
       </td>
       <td>${item.state|formatState}</td>
+      {@if turn == 'on'}
+      <td>开启</td>
+      {@/if}
       <td>${item.topic}</td>
       <td>${item.creater}</td>
       <td>${item.type|formatType}</td>
       <td>${item.reportNum}</td>
       <td>
-        ${item.shorturls}
+        <div>微信:${item.shorturls}</div>
+        <div>新浪:http://dwz.cn/NcpRQ</div>
+        <div>APP:http://dwz.cn/NcpRQ</div>
       </td>
       <td>${item.createTime|formatDate,'YY-MM-DD hh:mm'}</td>
     </tr>

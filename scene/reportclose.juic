@@ -9,6 +9,7 @@
   <script src="${{staticServer}}/js/sha512.js"></script>
 </head>
 <body>
+<div class="j-prompt">关闭该报道</div>
 <div class="lvs-selectbtn">
   <span id="j-true">关闭</span>
   <span id="j-false">取消</span>

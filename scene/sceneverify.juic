@@ -9,6 +9,7 @@
   <script src="${{staticServer}}/js/sha512.js"></script>
 </head>
 <body>
+<div class="j-prompt">审核该现场</div>
 <div class="lvs-selectbtn">
   <span id="j-pass">审核通过</span>
   <span id="j-back">退回</span>
