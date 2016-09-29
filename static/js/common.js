@@ -198,7 +198,6 @@ lvsCmd['upfile'].prototype = {
     window[callback] = function(fileurl){
       _this.addfile(fileurl);
     }
-    console.log(callback);
     // 上传
     this.fileBtn.click(function(){
       var filetype = _this.obj.data('filetype'),

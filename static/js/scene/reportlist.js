@@ -222,14 +222,20 @@ function bindReportList(){
     }
   });
   // 音频
-
+  $('#j-reportlist .j-audio').each(function(){
+    var audio = $(this).data('audio');
+    if (audio) {
+      $(this).click(function(){
+        parent.window.mainOverlay.show('<div class="lvs-overlay"><div class="title">播放音频<em class="j-overlay-close">X</em></div><iframe scrolling="auto" frameborder="0" width="620" height="70" src="../overlay/audio.html?audio='+audio+'"></iframe></div>');
+      });
+    }
+  });
   // 视频
   $('#j-reportlist .j-video').each(function(){
     var video = $(this).data('video');
     if (video) {
-      if (video.substr(0,1) == '/') video = video.substr(1);
       $(this).click(function(){
-        parent.window.mainOverlay.show('<div class="lvs-overlay"><div class="title">title<em class="j-overlay-close">close</em></div><video src="'+video+'"></video></div>');
+        parent.window.mainOverlay.show('<div class="lvs-overlay"><div class="title">播放视频<em class="j-overlay-close">X</em></div><iframe scrolling="auto" frameborder="0" width="620" height="420" src="../overlay/video.html?video='+video+'"></iframe></div>');
       });
     }
   });
