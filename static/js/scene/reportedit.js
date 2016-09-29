@@ -128,7 +128,7 @@ lvsCmd.ajax('/live-web-cms/report/getReporters.json', {}, function (state, res) 
           alert(res['errMsg']);
         }
       } else {
-        alert("接口请求失败，请检查网络连接！");
+        // alert("接口请求失败，请检查网络连接！");
       }
     });
   });
@@ -179,7 +179,7 @@ function getData(){
         alert(res['errMsg']);
       }
     } else {
-      alert("接口请求失败，请检查网络连接！");
+      // alert("接口请求失败，请检查网络连接！");
     }
   });
 }

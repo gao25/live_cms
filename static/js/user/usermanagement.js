@@ -161,7 +161,7 @@ function renderList (state, res) {
       alert(res['errMsg']);
     }
   } else {
-    alert("接口请求失败，请检查网络连接！");
+    // alert("接口请求失败，请检查网络连接！");
   }
 }
 searchData['currentPage'] = urlParams['currentPage'];

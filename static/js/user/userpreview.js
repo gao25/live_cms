@@ -28,7 +28,7 @@ function previewRender (state, res) {
       alert(res['errMsg']);
     }
   } else {
-    alert("接口请求失败，请检查网络连接！");
+    // alert("接口请求失败，请检查网络连接！");
   }
 }
 parent.executeCallback('/thirduserquery/getList.json', {currentPage:1,pageCount:20,identityNo:identityNo}, 'previewRender');

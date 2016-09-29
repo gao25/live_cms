@@ -194,7 +194,7 @@ lvsCmd['upfile'].prototype = {
   init: function(){
     this.fileBtn = $('<p class="file"><span class="add">+</span></p>');
     var _this = this,
-      callback = 'upfileCallback' + new Date().getTime();
+      callback = 'upfileCallback' + new Date().getTime() + Math.ceil(Math.random() * 1000);
     window[callback] = function(fileurl){
       _this.addfile(fileurl);
     }
@@ -202,12 +202,12 @@ lvsCmd['upfile'].prototype = {
     this.fileBtn.click(function(){
       var filetype = _this.obj.data('filetype'),
         iframe = _this.obj.data('iframe'),
-        upfileUrl = '/overlay/upfile.html?filetype='+filetype+'&callback='+callback;
+        upfileUrl = '/live-web-cms/overlay/upfile.html?filetype='+filetype+'&callback='+callback;
       if (filetype == 1 || filetype == 2 || filetype == 5) {
-        upfileUrl = '/overlay/uploader.html?filetype='+filetype+'&callback='+callback;
+        upfileUrl = '/live-web-cms/overlay/uploader.html?filetype='+filetype+'&callback='+callback;
       }
       if (iframe) upfileUrl += '&iframe=' + iframe;
-      parent.window.mainOverlay.show('<div class="lvs-overlay"><div class="title">title<em class="j-overlay-close">close</em></div><iframe scrolling="auto" frameborder="0" width="640" height="200" name="uploaderFrame" src="'+upfileUrl+'"></iframe></div>');
+      parent.window.mainOverlay.show('<div class="lvs-overlay"><div class="title">上传文件<em class="j-overlay-close">X</em></div><iframe scrolling="auto" frameborder="0" width="640" height="200" name="uploaderFrame" src="'+upfileUrl+'"></iframe></div>');
       return false;
     });
     this.obj.append(this.fileBtn);

@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <title>文件上传</title>
   <link rel="stylesheet" href="${{staticServer}}/css/base.css">
-  <link rel="stylesheet" href="/static/css/overlay.css">
+  <link rel="stylesheet" href="${{webServer}}/static/css/overlay.css">
   <script src="${{staticServer}}/js/jquery-1.11.0-min.js"></script>
 </head>
 <body>

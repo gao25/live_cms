@@ -11,7 +11,7 @@ if (isNaN(id) || id < 1) {
 var newTplform = new cake["tplform-1.0.1"]('j-editform');
 function renderForm (state, res) {
   if (!state) {
-    alert("接口请求失败，请检查网络连接！");
+    // alert("接口请求失败，请检查网络连接！");
     return false;
   }
   var orgMap = res['data']['orgMap'],
@@ -122,7 +122,7 @@ function setEditData (state, res) {
       alert(res['errMsg']);
     }
   } else {
-    alert("接口请求失败，请检查网络连接！");
+    // alert("接口请求失败，请检查网络连接！");
   }
 }
 function getEditData(){
@@ -146,7 +146,7 @@ function saveForm (state, res) {
       }
     }
   } else {
-    alert("接口请求失败，请检查网络连接！");
+    // alert("接口请求失败，请检查网络连接！");
   }
 }
 

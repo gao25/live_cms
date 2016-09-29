@@ -194,7 +194,7 @@ lvsCmd.ajax(url, searchData, function (state, res) {
       alert(res['errMsg']);
     }
   } else {
-    alert("接口请求失败，请检查网络连接！");
+    // alert("接口请求失败，请检查网络连接！");
   }
 });
 function verifyCallback(){
@@ -220,16 +220,38 @@ function bindList(){
       location.reload();
     });
   });
-  $('#j-list .j-orderup').click(function(){
-    lvsCmd.ajax('/live-web-cms/live/order.json', {}, function (state, res) {
-      location.reload();
-    });
-  });
-  $('#j-list .j-orderdown').click(function(){
-    lvsCmd.ajax('/live-web-cms/live/order.json', {}, function (state, res) {
-      location.reload();
-    });
-  });
+  var orderupObjs = $('#j-list .j-orderup');
+  for (var i=0; i<orderupObjs.length; i++) {
+    if (i>0) {
+      var preSort = orderupObjs.eq(i-1).data('sort');
+      orderupObjs.eq(i).click(function(){
+        lvsCmd.ajax('/live-web-cms/live/order.json', {"moveSort":$(this).data('sort'),"insertSort":preSort}, function (state, res) {
+          location.reload();
+        });
+        return false;
+      });
+    } else {
+      orderupObjs.eq(i).click(function(){
+        return false;
+      });
+    }
+  }
+  var orderdownObjs = $('#j-list .j-orderdown');
+  for (var i=0; i<orderdownObjs.length; i++) {
+    if (i == orderdownObjs.length) {
+      orderdownObjs.eq(i).click(function(){
+        return false;
+      });
+    } else {
+      var nextSort = orderdownObjs.eq(i+1).data('sort');
+      orderdownObjs.eq(i).click(function(){
+        lvsCmd.ajax('/live-web-cms/live/order.json', {"moveSort":$(this).data('sort'),"insertSort":nextSort}, function (state, res) {
+          location.reload();
+        });
+        return false;
+      });
+    }
+  }
   // 列表
   $('#j-list .more').hover(function(){
    $(this).find('ul').show();

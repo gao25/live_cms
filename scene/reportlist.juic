@@ -37,11 +37,13 @@
       {@if item.type == 1}
       <p class="j-pictures" data-pictures="${item.pictures}"></p>
       {@else if item.type == 2}
-      <p class="j-audio" data-audio="${item.audio}"></p>
-      <img class="play" src="${{webServer}}/static/img/play.png">
+      <p class="j-audio" data-audio="${item.audio}">
+        <img class="play" src="${{webServer}}/static/img/play.png">
+      </p>
       {@else if item.type == 4}
-      <p class="j-video" data-video="${item.video}"></p>
-      <img class="play" src="${{webServer}}/static/img/play.png">
+      <p class="j-video" data-video="${item.video}">
+        <img class="play" src="${{webServer}}/static/img/play.png">
+      </p>
       {@/if}
       <span class="lvs-title">${item.topic}</span>
       <span class="lvs-id">${item.id}</span>

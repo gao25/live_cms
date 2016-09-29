@@ -41,7 +41,7 @@ lvsCmd.ajax("/live-web-cms/live/preview.json", ajaxData, function (state, res) {
       alert(res['errMsg']);
     }
   } else {
-    alert("接口请求失败，请检查网络连接！");
+    // alert("接口请求失败，请检查网络连接！");
   }
 });
 function bindReportList(){

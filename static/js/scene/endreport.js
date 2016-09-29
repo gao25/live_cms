@@ -3,41 +3,35 @@ var searchFromData = lvsCmd['urlParams'];
 if (!searchFromData['page']) {
   searchFromData['page'] = 1;
 }
-if (isNaN(searchFromData['reportId']) || searchFromData['reportId'] < 1) {
-  parent.location.href = '/';
-}
+
 // juicer函数
 juicer.register('formatDate', lvsCmd['formatDate']);
 juicer.register('formatState', function(state){
   var stateDict = {
     "1": "未审核",
     "2": "审核通过",
-    "4": "审核失败",
-    "8": "未开始直播",
-    "16": "正在直播",
-    "32": "直播结束",
-    "64": "删除"
+    "8": "审核失败"
   }
   return stateDict[state];
 });
 
-//渲染列表
-var listTpl = juicer($('#j-list script').html());
-$('#j-list script').remove();
+// 渲染列表
+var reportlistTpl = juicer($('#j-reportlist script').html());
+$('#j-reportlist script').remove();
 if (searchFromData['beginDate'] || searchFromData['endDate'] || searchFromData['reportType'] || searchFromData['key'] || searchFromData['keyType']) {
-  var url = '/live-web-cms/comment/search.json';
-} else{
-  var url = '/live-web-cms/comment/getByReport.json';
+  var url = '/live-web-cms/report/searchApproved.json';
+} else {
+  var url = '/live-web-cms/report/getApproved.json';
 }
 var ajaxData = $.extend({}, searchFromData);
 if (ajaxData['endDate']) ajaxData['endDate'] = + ajaxData['endDate'] + 24 * 3600 * 1000;
 lvsCmd.ajax(url, ajaxData, function (state, res) {
   if (state) {
     if (res['status'] == '0') {
-      var listHtml = listTpl.render(res);
-      $('#j-list').html(listHtml);
+      var reportlistHtml = reportlistTpl.render(res);
+      $('#j-reportlist').html(reportlistHtml);
       // 绑定操作
-      bindList();
+      bindReportList();
       // 分页
       lvsCmd.page('j-page', res['totalcount'], res['currentpage'], 10);
       $('#j-page a').click(function(){
@@ -51,54 +45,36 @@ lvsCmd.ajax(url, ajaxData, function (state, res) {
     // alert("接口请求失败，请检查网络连接！");
   }
 });
-function bindList(){
-  // 选中操作
-var select_num=0;
-$('.lselect-btn').click(function(){
-  if(select_num==0){
-    $('.lselect-btn').addClass('lselected');
-    $('.select-btn').addClass('lselected');
-    select_num=1;
-  }else{
-    $('.lselect-btn').removeClass('lselected');
-    $('.select-btn').removeClass('lselected');
-    select_num=0;
-  }
-})
-$(".select-btn").on("click",function(){
-  $('.lselect-btn').removeClass('lselected');
-  select_num=0;
-  if(!$(this).hasClass("lselected")){
-    $(this).addClass('lselected');
-  }else{
-    $(this).removeClass('lselected');
-  }
-})
-//删除操作
-$('.comment-delete-btn').click(function(){
-  $('.select-btn').each(function(){
-    if($(this).hasClass('lselected')){
-      $(this).parent().parent().remove();
-      if($('.lselect-btn').hasClass('lselected')){
-        $('.lselect-btn').removeClass('lselected');
-        select_num=0;
-      } 
-    }
+function verifyCallback(){
+  location.reload();
+}
+function closeCallback(){
+  location.reload();
+}
+function bindReportList(){
+  // 审核
+  $('#j-reportlist .j-verify').click(function(){
+    parent.window.mainOverlay.show('<div class="lvs-overlay"><div class="title">报道审核<em class="j-overlay-close">X</em></div><iframe scrolling="auto" frameborder="0" width="640" height="200" src="scene/reportverify.html?reportId='+$(this).data('id')+'&callback=verifyCallback"></iframe></div>');
+    return false;
+  });
+  // 关闭
+  $('#j-reportlist .j-close').click(function(){
+    parent.window.mainOverlay.show('<div class="lvs-overlay"><div class="title">关闭报道<em class="j-overlay-close">X</em></div><iframe scrolling="auto" frameborder="0" width="640" height="200" src="scene/reportclose.html?reportId='+$(this).data('id')+'&callback=closeCallback"></iframe></div>');
+    return false;
+  });
+  // 列表
+  $('#j-reportlist .more').hover(function(){
+    $(this).find('img').attr('src','/static/img/green_menu.png');
+    $(this).find('ul').show();
+  },function(){
+    $(this).find('img').attr('src','/static/img/menu.png');
+    $(this).find('ul').hide();
   })
-})
-$('.delete-btn').hover(function(){
-  $(this).css('color','#f00');
-},function(){
-  $(this).css('color','#323a4d');
-})
-$('.delete-btn').on('click',function(){
-  $(this).parents('tr').remove();
-})
-$('.pending-btn').hover(function(){
-  $(this).css('color','#2c1cca');
-},function(){
-  $(this).css('color','#323a4d');
-})
+  $('#j-reportlist .more ul li a').hover(function(){
+    $(this).css('color','#12bb9a');
+  },function(){
+    $(this).css('color','#808080');
+  })
 }
 
 // 跳转
@@ -114,12 +90,12 @@ function locationFn(){
   });
   location.href = toUrl;
 }
+
 // 渲染搜索栏
 var newSearchform = new cake["tplform-1.0.1"]('j-search'),
 searchConfig = {
   "type": "ajax",
   "method": "post",
-  "action": "",
   "fields": [{
     "class": "j-starttime",
     "title": "开始时间",
@@ -170,9 +146,10 @@ searchConfig = {
     "type": "select",
     "option": [
       {"text": "关键字类型", "value": "0"},
-      {"text": "评论用户", "value": "1"},
-      {"text": "评论内容", "value": "2"},
+      {"text": "报道人", "value": "1"},
+      {"text": "报道内容", "value": "2"},
       {"text": "报道ID", "value": "4"},
+      {"text": "现场标题", "value": "8"}
     ]
   }],
   "button": [
