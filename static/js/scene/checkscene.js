@@ -179,6 +179,10 @@ lvsCmd.ajax(url, searchData, function (state, res) {
         if (urlParams['turn'] == 'on') {
           res['turn'] = 'on';
         }
+        $.each(res['data'], function(){
+          this['sortnum'] = this['sort'];
+        });
+        console.log(res);
         var listHtml = listTpl.render(res);
         $('#j-list').html(listHtml);
         // 绑定操作

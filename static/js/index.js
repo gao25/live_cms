@@ -8,7 +8,7 @@ if (!role) {
 // 请求用户服务器
 function executeCallback (action, actionBody, callbackName, iframename) {
   if (!iframename) iframename = 'mainframe';
-  var executeCallbackName = 'executeCallback' + new Date().getTime();
+  var executeCallbackName = 'executeCallback' + new Date().getTime() + Math.ceil(Math.random() * 1000);
   window[executeCallbackName] = function(state, res){
     parent.window.frames[iframename][callbackName](state, res);
   };
